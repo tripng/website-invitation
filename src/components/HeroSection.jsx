@@ -38,8 +38,8 @@ export default function HeroSection({ start }) {
       });
 
       gsap.to(titleLayer.current, {
-        scale: 0.4,
-        yPercent: 35,
+        scale: 0.45,
+        xPercent: -35,
         ease: "none",
         scrollTrigger: {
           trigger: root.current,
@@ -91,7 +91,7 @@ export default function HeroSection({ start }) {
       />
       <div
         ref={titleLayer}
-        className="pointer-events-none fixed inset-0 z-30 flex flex-col items-center justify-center"
+        className="pointer-events-none fixed inset-0 z-30 flex flex-col items-start justify-center pl-6 md:pl-12"
       >
         <div className="overflow-hidden">
           <h1 className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide">
