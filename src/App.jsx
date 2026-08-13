@@ -7,20 +7,24 @@ import MarqueeSection from "./components/MarqueeSection";
 import ScrollRevealSection from "./components/ScrollRevealSection";
 import ParallaxSection from "./components/ParallaxSection";
 import PreWeddingGallery from "./components/PreWeddingGallery";
+import ScrollFollower from "./components/ScrollFollower";
 
 export default function App() {
   const [ready, setReady] = useState(false);
   useLenisScroll();
 
   return (
-    <main>
-      <LoaderCurtain onComplete={() => setReady(true)} />
-      <StickyNavigation />
-      <HeroSection start={ready} />
-      <MarqueeSection />
-      <ScrollRevealSection />
-      <ParallaxSection />
-      <PreWeddingGallery />
-    </main>
+    <>
+      <ScrollFollower />
+      <main>
+        <LoaderCurtain onComplete={() => setReady(true)} />
+        <StickyNavigation />
+        <HeroSection start={ready} />
+        <MarqueeSection />
+        <ScrollRevealSection />
+        <ParallaxSection />
+        <PreWeddingGallery />
+      </main>
+    </>
   );
 }

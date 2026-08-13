@@ -8,3 +8,5 @@ export const loaderDuration = 2.2;
 export const curtainDuration = 1;
 export const marqueeDuration = 18;
 export const heroDrift = 40;
+export const followerSpin = 220;
+export const followerOpacity = 0.35;
