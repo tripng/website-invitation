@@ -10,3 +10,6 @@ export const marqueeDuration = 18;
 export const heroDrift = 40;
 export const followerSpin = 220;
 export const followerOpacity = 0.35;
+export const heroMetaDelay = 0.9;
+export const metaRevealDuration = 1;
+export const accentRevealDuration = 0.8;

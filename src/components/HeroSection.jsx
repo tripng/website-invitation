@@ -1,6 +1,13 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { entranceDuration, scrollEase, heroDrift } from "../constants/animationConfig";
+import {
+  entranceDuration,
+  scrollEase,
+  heroDrift,
+  heroMetaDelay,
+  metaRevealDuration,
+  accentRevealDuration,
+} from "../constants/animationConfig";
 
 export default function HeroSection({ start }) {
   const root = useRef(null);
@@ -8,12 +15,16 @@ export default function HeroSection({ start }) {
   const titleLayer = useRef(null);
   const amelia = useRef(null);
   const jonathan = useRef(null);
+  const meta = useRef(null);
+  const accent = useRef(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set([amelia.current, jonathan.current], { opacity: 0, yPercent: 0 });
       gsap.set(amelia.current, { yPercent: -58 });
       gsap.set(jonathan.current, { yPercent: 58 });
+      gsap.set(meta.current, { opacity: 0, yPercent: 20 });
+      gsap.set(accent.current, { scaleX: 0 });
     }, root);
     return () => ctx.revert();
   }, []);
@@ -26,6 +37,21 @@ export default function HeroSection({ start }) {
         duration: entranceDuration,
         ease: scrollEase,
         delay: 0.3,
+      });
+
+      gsap.to(meta.current, {
+        opacity: 1,
+        yPercent: 0,
+        duration: metaRevealDuration,
+        ease: scrollEase,
+        delay: heroMetaDelay,
+      });
+
+      gsap.to(accent.current, {
+        scaleX: 1,
+        duration: accentRevealDuration,
+        ease: scrollEase,
+        delay: heroMetaDelay + 0.2,
       });
 
       gsap.to(background.current, {
@@ -96,15 +122,18 @@ export default function HeroSection({ start }) {
     >
       <div
         ref={background}
-        className="absolute inset-0 -z-10 bg-cover bg-center opacity-25"
+        className="absolute inset-0 -z-20 bg-cover bg-center opacity-25"
         style={{
           backgroundImage:
             "url(https://picsum.photos/seed/hero-wedding/1600/1200)",
         }}
       />
+      <div className="hero-vignette -z-10" />
+      <div className="hero-frame -z-10" />
+
       <div
         ref={titleLayer}
-        className="pointer-events-none fixed left-1/2 top-1/2 z-30 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center mix-blend-difference"
+        className="pointer-events-none fixed left-1/2 top-1/2 z-30 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center mix-blend-difference"
       >
         <div className="flex items-center gap-3 md:gap-6">
           <h1
@@ -120,7 +149,20 @@ export default function HeroSection({ start }) {
             &amp; Jonathan
           </h1>
         </div>
+        <div
+          ref={meta}
+          className="mt-6 flex flex-col items-center gap-3 font-sans text-ink-soft"
+        >
+          <span className="text-xs tracking-[0.45em] uppercase">
+            Bali &middot; 12 September 2026
+          </span>
+          <span
+            ref={accent}
+            className="block h-px w-24 origin-center bg-gold"
+          />
+        </div>
       </div>
+
       <div className="hero-scroll absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
         <span className="font-sans text-ink-soft text-xs tracking-[0.3em] uppercase">
           Scroll
