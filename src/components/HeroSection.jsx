@@ -63,6 +63,7 @@ export default function HeroSection({ start }) {
 
   return (
     <section
+      id="hero"
       ref={root}
       onPointerMove={handlePointer}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-cream"
