@@ -33,7 +33,7 @@ export default function FloralCorner({ start }) {
         ref={topLeft}
         aria-hidden="true"
         style={{ opacity: 0 }}
-        className="pointer-events-none fixed left-4 top-4 z-10 hidden mix-blend-multiply md:block"
+        className="pointer-events-none fixed left-4 top-4 z-10 hidden text-white mix-blend-difference md:block"
       >
         <FloralBloom size={140} />
       </div>
@@ -41,7 +41,7 @@ export default function FloralCorner({ start }) {
         ref={bottomRight}
         aria-hidden="true"
         style={{ opacity: 0 }}
-        className="pointer-events-none fixed bottom-4 right-4 z-10 hidden -scale-x-100 -scale-y-100 mix-blend-multiply md:block"
+        className="pointer-events-none fixed bottom-4 right-4 z-10 hidden -scale-x-100 -scale-y-100 text-white mix-blend-difference md:block"
       >
         <FloralBloom size={140} />
       </div>

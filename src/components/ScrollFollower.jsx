@@ -35,7 +35,7 @@ export default function ScrollFollower() {
     <div
       ref={root}
       aria-hidden="true"
-      className="pointer-events-none fixed right-6 bottom-6 z-0 hidden md:block mix-blend-multiply"
+      className="pointer-events-none fixed right-6 bottom-6 z-0 hidden text-white mix-blend-difference md:block"
       style={{ opacity: 0 }}
     >
       <FloralBloom size={120} />

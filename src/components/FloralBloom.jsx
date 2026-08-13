@@ -8,7 +8,7 @@ export default function FloralBloom({ size = 120, className = "" }) {
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g stroke="var(--color-gold)" strokeWidth="1.2" strokeLinecap="round">
+      <g stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
         <path d="M60 60 C60 40 60 24 60 14" />
         <path d="M60 60 C72 52 86 48 96 44" />
         <path d="M60 60 C48 52 34 48 24 44" />
@@ -16,7 +16,7 @@ export default function FloralBloom({ size = 120, className = "" }) {
         <path d="M60 60 C52 72 48 86 44 96" />
       </g>
       <g
-        stroke="var(--color-gold)"
+        stroke="currentColor"
         strokeWidth="0.8"
         fill="none"
         opacity="0.7"
@@ -27,7 +27,7 @@ export default function FloralBloom({ size = 120, className = "" }) {
         <ellipse cx="76" cy="90" rx="6" ry="11" transform="rotate(28 76 90)" />
         <ellipse cx="44" cy="90" rx="6" ry="11" transform="rotate(-28 44 90)" />
       </g>
-      <circle cx="60" cy="60" r="4" fill="var(--color-gold)" />
+      <circle cx="60" cy="60" r="4" fill="currentColor" />
     </svg>
   );
 }
