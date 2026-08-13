@@ -13,3 +13,6 @@ export const followerOpacity = 0.35;
 export const heroMetaDelay = 0.9;
 export const metaRevealDuration = 1;
 export const accentRevealDuration = 0.8;
+export const floralOpacity = 0.5;
+export const floralEntranceDelay = 1.1;
+export const floralDrift = 60;

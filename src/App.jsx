@@ -8,6 +8,7 @@ import ScrollRevealSection from "./components/ScrollRevealSection";
 import ParallaxSection from "./components/ParallaxSection";
 import PreWeddingGallery from "./components/PreWeddingGallery";
 import ScrollFollower from "./components/ScrollFollower";
+import FloralCorner from "./components/FloralCorner";
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -16,6 +17,7 @@ export default function App() {
   return (
     <>
       <ScrollFollower />
+      <FloralCorner start={ready} />
       <main>
         <LoaderCurtain onComplete={() => setReady(true)} />
         <StickyNavigation />
