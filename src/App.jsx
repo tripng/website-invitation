@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenisScroll } from "./hooks/useLenisScroll";
 import LoaderCurtain from "./components/LoaderCurtain";
