@@ -9,29 +9,30 @@ export default function FloatingNames() {
   const root = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.set(root.current, { opacity: 0, yPercent: 40 });
+    const el = root.current;
+    const hero = document.querySelector("#hero");
+    gsap.set(el, { opacity: 0, yPercent: 40 });
 
-      ScrollTrigger.create({
-        trigger: "#hero",
-        start: "bottom top",
-        onEnter: () =>
-          gsap.to(root.current, {
-            opacity: 1,
-            yPercent: 0,
-            duration: floatingNamesDuration,
-            ease: floatingNamesEase,
-          }),
-        onLeaveBack: () =>
-          gsap.to(root.current, {
-            opacity: 0,
-            yPercent: 40,
-            duration: floatingNamesDuration,
-            ease: floatingNamesEase,
-          }),
-      });
-    }, root);
-    return () => ctx.revert();
+    const st = ScrollTrigger.create({
+      trigger: hero,
+      start: "bottom top",
+      onEnter: () =>
+        gsap.to(el, {
+          opacity: 1,
+          yPercent: 0,
+          duration: floatingNamesDuration,
+          ease: floatingNamesEase,
+        }),
+      onLeaveBack: () =>
+        gsap.to(el, {
+          opacity: 0,
+          yPercent: 40,
+          duration: floatingNamesDuration,
+          ease: floatingNamesEase,
+        }),
+    });
+
+    return () => st.kill();
   }, []);
 
   return (
