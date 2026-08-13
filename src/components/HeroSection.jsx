@@ -67,7 +67,8 @@ export default function HeroSection({ start }) {
 
       gsap.to(titleLayer.current, {
         y: () => window.innerHeight * 0.4,
-        scale: 0.55,
+        scale: 0.4,
+        opacity: 0.5,
         ease: "none",
         scrollTrigger: {
           trigger: root.current,
