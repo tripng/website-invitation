@@ -5,6 +5,7 @@ import StickyNavigation from "./components/StickyNavigation";
 import HeroSection from "./components/HeroSection";
 import MarqueeSection from "./components/MarqueeSection";
 import ScrollRevealSection from "./components/ScrollRevealSection";
+import OpeningBlessing from "./components/OpeningBlessing";
 import ParallaxSection from "./components/ParallaxSection";
 import PreWeddingGallery from "./components/PreWeddingGallery";
 import ScrollFollower from "./components/ScrollFollower";
@@ -23,6 +24,7 @@ export default function App() {
         <StickyNavigation />
         <HeroSection start={ready} />
         <MarqueeSection />
+        <OpeningBlessing />
         <ScrollRevealSection />
         <ParallaxSection />
         <PreWeddingGallery />
