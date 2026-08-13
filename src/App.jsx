@@ -8,7 +8,6 @@ import ScrollRevealSection from "./components/ScrollRevealSection";
 import ParallaxSection from "./components/ParallaxSection";
 import PreWeddingGallery from "./components/PreWeddingGallery";
 import ScrollFollower from "./components/ScrollFollower";
-import FloatingNames from "./components/FloatingNames";
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -26,7 +25,6 @@ export default function App() {
         <ParallaxSection />
         <PreWeddingGallery />
       </main>
-      <FloatingNames />
     </>
   );
 }

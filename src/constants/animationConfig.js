@@ -10,5 +10,3 @@ export const marqueeDuration = 18;
 export const heroDrift = 40;
 export const followerSpin = 220;
 export const followerOpacity = 0.35;
-export const floatingNamesDuration = 0.8;
-export const floatingNamesEase = "power3.out";

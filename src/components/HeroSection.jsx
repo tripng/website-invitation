@@ -5,6 +5,7 @@ import { entranceDuration, scrollEase, heroDrift } from "../constants/animationC
 export default function HeroSection({ start }) {
   const root = useRef(null);
   const background = useRef(null);
+  const titleLayer = useRef(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -27,6 +28,18 @@ export default function HeroSection({ start }) {
 
       gsap.to(background.current, {
         yPercent: heroDrift,
+        ease: "none",
+        scrollTrigger: {
+          trigger: root.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      gsap.to(titleLayer.current, {
+        scale: 0.4,
+        yPercent: 35,
         ease: "none",
         scrollTrigger: {
           trigger: root.current,
@@ -66,7 +79,7 @@ export default function HeroSection({ start }) {
       id="hero"
       ref={root}
       onPointerMove={handlePointer}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-cream"
+      className="relative min-h-screen overflow-hidden bg-cream"
     >
       <div
         ref={background}
@@ -76,26 +89,31 @@ export default function HeroSection({ start }) {
             "url(https://picsum.photos/seed/hero-wedding/1600/1200)",
         }}
       />
-      <div className="overflow-hidden">
-        <h1 className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide">
-          Amelia
-        </h1>
+      <div
+        ref={titleLayer}
+        className="pointer-events-none fixed inset-0 z-30 flex flex-col items-center justify-center"
+      >
+        <div className="overflow-hidden">
+          <h1 className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide">
+            Amelia
+          </h1>
+        </div>
+        <div className="overflow-hidden mt-2">
+          <h1 className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide">
+            &amp; Jonathan
+          </h1>
+        </div>
+        <div className="overflow-hidden mt-10">
+          <p className="hero-line font-sans text-ink-soft text-sm md:text-base tracking-[0.4em] uppercase">
+            Together Forever
+          </p>
+        </div>
       </div>
-      <div className="overflow-hidden mt-2">
-        <h1 className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide">
-          &amp; Jonathan
-        </h1>
-      </div>
-      <div className="overflow-hidden mt-10">
-        <p className="hero-line font-sans text-ink-soft text-sm md:text-base tracking-[0.4em] uppercase">
-          Together Forever
-        </p>
-      </div>
-      <div className="hero-scroll absolute bottom-10 flex flex-col items-center gap-2">
+      <div className="hero-scroll absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
         <span className="font-sans text-ink-soft text-xs tracking-[0.3em] uppercase">
           Scroll
         </span>
-        <span className="w-px h-10 bg-ink-soft/50" />
+        <span className="h-10 w-px bg-ink-soft/50" />
       </div>
     </section>
   );
