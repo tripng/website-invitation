@@ -17,7 +17,6 @@ export default function App() {
   return (
     <>
       <ScrollFollower />
-      <FloatingNames />
       <main>
         <LoaderCurtain onComplete={() => setReady(true)} />
         <StickyNavigation />
@@ -27,6 +26,7 @@ export default function App() {
         <ParallaxSection />
         <PreWeddingGallery />
       </main>
+      <FloatingNames />
     </>
   );
 }

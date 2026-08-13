@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { floatingNamesDuration, floatingNamesEase } from "../constants/animationConfig";
@@ -35,14 +36,15 @@ export default function FloatingNames() {
     return () => st.kill();
   }, []);
 
-  return (
+  return createPortal(
     <div
       ref={root}
       aria-hidden="true"
-      className="pointer-events-none fixed bottom-5 left-1/2 z-30 -translate-x-1/2 font-serif text-ink text-sm md:text-base tracking-[0.35em] uppercase"
-      style={{ opacity: 0 }}
+      style={{ opacity: 0, zIndex: 9999 }}
+      className="pointer-events-none fixed bottom-5 left-1/2 -translate-x-1/2 font-serif text-gold text-sm md:text-base tracking-[0.35em] uppercase"
     >
       Amelia &amp; Jonathan
-    </div>
+    </div>,
+    document.body
   );
 }
