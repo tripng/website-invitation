@@ -104,18 +104,18 @@ export default function HeroSection({ start }) {
       />
       <div
         ref={titleLayer}
-        className="pointer-events-none fixed left-1/2 top-1/2 z-30 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+        className="pointer-events-none fixed left-1/2 top-1/2 z-30 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center mix-blend-difference"
       >
         <div className="flex items-center gap-3 md:gap-6">
           <h1
             ref={amelia}
-            className="whitespace-nowrap font-serif text-ink text-5xl md:text-8xl tracking-wide"
+            className="whitespace-nowrap font-serif text-white text-5xl md:text-8xl tracking-wide"
           >
             Amelia
           </h1>
           <h1
             ref={jonathan}
-            className="whitespace-nowrap font-serif text-ink text-5xl md:text-8xl tracking-wide"
+            className="whitespace-nowrap font-serif text-white text-5xl md:text-8xl tracking-wide"
           >
             &amp; Jonathan
           </h1>
