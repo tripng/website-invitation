@@ -6,10 +6,14 @@ export default function HeroSection({ start }) {
   const root = useRef(null);
   const background = useRef(null);
   const titleLayer = useRef(null);
+  const amelia = useRef(null);
+  const jonathan = useRef(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set(".hero-line", { yPercent: 120, opacity: 0 });
+      gsap.set(amelia.current, { yPercent: -60 });
+      gsap.set(jonathan.current, { yPercent: 60 });
     }, root);
     return () => ctx.revert();
   }, []);
@@ -38,8 +42,19 @@ export default function HeroSection({ start }) {
       });
 
       gsap.to(titleLayer.current, {
-        scale: 0.45,
-        xPercent: -35,
+        yPercent: 42,
+        scale: 0.5,
+        ease: "none",
+        scrollTrigger: {
+          trigger: root.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      gsap.to([amelia.current, jonathan.current], {
+        yPercent: 0,
         ease: "none",
         scrollTrigger: {
           trigger: root.current,
@@ -91,22 +106,25 @@ export default function HeroSection({ start }) {
       />
       <div
         ref={titleLayer}
-        className="pointer-events-none fixed inset-0 z-30 flex flex-col items-start justify-center pl-6 md:pl-12"
+        className="pointer-events-none fixed inset-0 z-30 flex items-center justify-center"
       >
-        <div className="overflow-hidden">
-          <h1 className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide">
-            Amelia
-          </h1>
-        </div>
-        <div className="overflow-hidden mt-2">
-          <h1 className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide">
-            &amp; Jonathan
-          </h1>
-        </div>
-        <div className="overflow-hidden mt-10">
-          <p className="hero-line font-sans text-ink-soft text-sm md:text-base tracking-[0.4em] uppercase">
-            Together Forever
-          </p>
+        <div className="flex items-center gap-3 md:gap-6">
+          <div className="overflow-hidden">
+            <h1
+              ref={amelia}
+              className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide"
+            >
+              Amelia
+            </h1>
+          </div>
+          <div className="overflow-hidden">
+            <h1
+              ref={jonathan}
+              className="hero-line font-serif text-ink text-6xl md:text-8xl tracking-wide"
+            >
+              &amp; Jonathan
+            </h1>
+          </div>
         </div>
       </div>
       <div className="hero-scroll absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
