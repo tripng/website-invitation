@@ -32,13 +32,18 @@ function Card({ data, side }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const fromX = side === "left" ? -profileRevealDistance : profileRevealDistance;
-      gsap.from(card.current, {
-        xPercent: fromX,
-        opacity: 0,
-        duration: profileRevealDuration,
-        ease: "power3.out",
-        scrollTrigger: { trigger: card.current, start: "top 75%" },
-      });
+      gsap.fromTo(
+        card.current,
+        { xPercent: fromX, opacity: 0 },
+        {
+          xPercent: 0,
+          opacity: 1,
+          duration: profileRevealDuration,
+          ease: "power3.out",
+          immediateRender: false,
+          scrollTrigger: { trigger: card.current, start: "top 80%", once: true },
+        }
+      );
       gsap.from(photo.current, {
         yPercent: profileParallax,
         ease: "none",

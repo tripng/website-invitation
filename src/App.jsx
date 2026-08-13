@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenisScroll } from "./hooks/useLenisScroll";
 import LoaderCurtain from "./components/LoaderCurtain";
 import StickyNavigation from "./components/StickyNavigation";
@@ -13,6 +14,10 @@ import PreWeddingGallery from "./components/PreWeddingGallery";
 export default function App() {
   const [ready, setReady] = useState(false);
   useLenisScroll();
+
+  useEffect(() => {
+    if (ready) ScrollTrigger.refresh();
+  }, [ready]);
 
   return (
     <>
