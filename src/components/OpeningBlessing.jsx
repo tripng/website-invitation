@@ -1,6 +1,11 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  blessingColorStart,
+  blessingColorEnd,
+  blessingColorStagger,
+} from "../constants/animationConfig";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,12 +14,12 @@ const ARABIC =
 const TRANSLATION =
   "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan dari jenismu sendiri agar kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang.";
 
-function Words({ text, className }) {
+function Chars({ text, className }) {
   return (
     <span className={className}>
-      {text.split(" ").map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden align-bottom">
-          <span className="rw inline-block">{word}&nbsp;</span>
+      {[...text].map((ch, i) => (
+        <span key={i} className="char inline-block" style={{ color: blessingColorStart }}>
+          {ch === " " ? " " : ch}
         </span>
       ))}
     </span>
@@ -26,15 +31,15 @@ export default function OpeningBlessing() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".rw", {
-        yPercent: 100,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power3.out",
-        stagger: 0.012,
+      gsap.to(".char", {
+        color: blessingColorEnd,
+        ease: "none",
+        stagger: blessingColorStagger,
         scrollTrigger: {
           trigger: root.current,
-          start: "top 75%",
+          start: "top 70%",
+          end: "bottom 60%",
+          scrub: true,
         },
       });
     }, root);
@@ -52,12 +57,12 @@ export default function OpeningBlessing() {
         </p>
         <p
           dir="rtl"
-          className="mb-10 font-serif text-3xl leading-loose text-ink md:text-4xl"
+          className="mb-10 font-serif text-3xl leading-loose md:text-4xl"
         >
-          <Words text={ARABIC} />
+          <Chars text={ARABIC} />
         </p>
-        <p className="font-sans text-base leading-relaxed text-ink-soft md:text-lg">
-          <Words text={TRANSLATION} />
+        <p className="font-sans text-base leading-relaxed md:text-lg">
+          <Chars text={TRANSLATION} />
         </p>
         <p className="mt-10 font-sans text-xs tracking-[0.3em] uppercase text-gold">
           QS. Ar-Rum · 30:21
