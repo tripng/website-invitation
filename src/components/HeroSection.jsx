@@ -149,18 +149,19 @@ export default function HeroSection({ start }) {
             &amp; Jonathan
           </h1>
         </div>
-        <div
-          ref={meta}
-          className="mt-6 flex flex-col items-center gap-3 font-sans text-ink-soft"
-        >
-          <span className="text-xs tracking-[0.45em] uppercase">
-            Bali &middot; 12 September 2026
-          </span>
-          <span
-            ref={accent}
-            className="block h-px w-24 origin-center bg-gold"
-          />
-        </div>
+      </div>
+
+      <div
+        ref={meta}
+        className="absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 translate-y-[8rem] flex-col items-center gap-3 font-sans text-ink-soft md:translate-y-[11rem]"
+      >
+        <span className="text-xs tracking-[0.45em] uppercase">
+          Bali &middot; 12 September 2026
+        </span>
+        <span
+          ref={accent}
+          className="block h-px w-24 origin-center bg-gold"
+        />
       </div>
 
       <div className="hero-scroll absolute bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
