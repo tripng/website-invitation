@@ -37,8 +37,8 @@ export default function OpeningBlessing() {
         stagger: blessingColorStagger,
         scrollTrigger: {
           trigger: root.current,
-          start: "top 70%",
-          end: "bottom 60%",
+          start: "top 60%",
+          end: "bottom 80%",
           scrub: true,
         },
       });

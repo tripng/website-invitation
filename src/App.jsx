@@ -6,6 +6,7 @@ import HeroSection from "./components/HeroSection";
 import MarqueeSection from "./components/MarqueeSection";
 import ScrollRevealSection from "./components/ScrollRevealSection";
 import OpeningBlessing from "./components/OpeningBlessing";
+import CoupleProfile from "./components/CoupleProfile";
 import ParallaxSection from "./components/ParallaxSection";
 import PreWeddingGallery from "./components/PreWeddingGallery";
 
@@ -21,6 +22,7 @@ export default function App() {
         <HeroSection start={ready} />
         <MarqueeSection />
         <OpeningBlessing />
+        <CoupleProfile />
         <ScrollRevealSection />
         <ParallaxSection />
         <PreWeddingGallery />
