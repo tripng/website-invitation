@@ -109,7 +109,7 @@ export default function EventDetails() {
           <span
             ref={progress}
             aria-hidden="true"
-            className="absolute left-1/2 top-0 h-full -translate-x-1/2 origin-top bg-gradient-to-b from-gold/70 to-gold/10"
+            className="absolute left-1/2 top-0 hidden h-full -translate-x-1/2 origin-top bg-gradient-to-b from-gold/70 to-gold/10 md:block"
             style={{ width: eventProgressWidth, transform: "scaleY(0)" }}
           />
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
