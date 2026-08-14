@@ -17,3 +17,7 @@ export const blessingColorStagger = 0.006;
 export const profileParallax = 14;
 export const profileRevealDuration = 1;
 export const profileRevealDistance = 40;
+export const profileScale = 1.15;
+export const profileClipDuration = 1.1;
+export const profileTextDrift = 18;
+export const profileDividerDuration = 0.9;
