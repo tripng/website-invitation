@@ -52,7 +52,7 @@ function BankCard() {
         <span className="font-sans text-lg tracking-[0.2em] text-ink">{BANK.account}</span>
         <button
           onClick={copy}
-          className="shrink-0 rounded-full border border-gold/50 px-4 py-1.5 font-sans text-xs uppercase tracking-[0.2em] text-gold transition-colors hover:bg-gold hover:text-cream"
+          className="shrink-0 whitespace-nowrap rounded-full border border-gold/50 px-4 py-1.5 font-sans text-xs uppercase tracking-[0.2em] text-gold transition-colors hover:bg-gold hover:text-cream min-w-[5.5rem]"
         >
           {copied ? "Tersalin" : "Salin"}
         </button>
@@ -88,6 +88,11 @@ function QrisCard() {
 }
 
 function AddressCard() {
+  const mapsQuery = encodeURIComponent(
+    `${ADDRESS.line1}, ${ADDRESS.line2}, ${ADDRESS.line3}`
+  );
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
   return (
     <div className="group relative flex flex-col rounded-2xl border border-gold/25 bg-cream/40 p-7">
       <span className="pointer-events-none absolute left-3 top-3 h-5 w-5 border-l border-t border-gold/40" />
@@ -99,13 +104,21 @@ function AddressCard() {
         <circle cx="12" cy="9" r="2.5" />
       </svg>
       <h3 className="mb-3 font-serif text-xl text-ink">Kirim Kado</h3>
-      <p className="font-sans text-sm leading-relaxed text-ink-soft">
+      <p className="mb-5 font-sans text-sm leading-relaxed text-ink-soft">
         {ADDRESS.line1}
         <br />
         {ADDRESS.line2}
         <br />
         {ADDRESS.line3}
       </p>
+      <a
+        href={mapsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-auto inline-flex items-center justify-center gap-2 rounded-full border border-gold/50 px-4 py-1.5 font-sans text-xs uppercase tracking-[0.2em] text-gold transition-colors hover:bg-gold hover:text-cream"
+      >
+        Lihat di Maps
+      </a>
     </div>
   );
 }
