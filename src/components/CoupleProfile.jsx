@@ -9,6 +9,8 @@ import {
   profileClipDuration,
   profileTextDrift,
   profileDividerDuration,
+  profileFadeDistance,
+  profileAmbientDuration,
 } from "../constants/animationConfig";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,55 +39,66 @@ function ProfileCard({ data, side }) {
   const name = useRef(null);
   const parent = useRef(null);
   const quote = useRef(null);
+  const ambient = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const fromX = side === "left" ? -profileRevealDistance : profileRevealDistance;
 
-      gsap.fromTo(
-        card.current,
-        { xPercent: fromX, opacity: 0 },
-        {
+      gsap.set(card.current, { xPercent: fromX, opacity: 0, scale: 0.92 });
+      gsap.set(clip.current, { clipPath: "inset(0 100% 0 0)" });
+      gsap.set([label.current, name.current, parent.current, quote.current], {
+        yPercent: 120,
+        opacity: 0,
+      });
+      gsap.set(ambient.current, { scaleY: 0, opacity: 0 });
+
+      const st = ScrollTrigger.create({
+        trigger: card.current,
+        start: "top 85%",
+        end: "bottom 15%",
+        onEnter: () => playIn(),
+        onLeave: () => fadeOut(),
+        onEnterBack: () => playIn(),
+        onLeaveBack: () => fadeOut(),
+      });
+
+      const playIn = () => {
+        gsap.to(card.current, {
           xPercent: 0,
           opacity: 1,
+          scale: 1,
           duration: profileRevealDuration,
           ease: "power3.out",
-          immediateRender: false,
-          scrollTrigger: { trigger: card.current, start: "top 80%", once: true },
-        }
-      );
-
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: card.current, start: "top 80%", once: true },
-      });
-      tl.fromTo(
-        clip.current,
-        { clipPath: "inset(0 100% 0 0)" },
-        {
+        });
+        const tl = gsap.timeline();
+        tl.to(clip.current, {
           clipPath: "inset(0 0% 0 0)",
           duration: profileClipDuration,
           ease: "power4.out",
-        },
-        0
-      )
-        .fromTo(
-          photo.current,
-          { scale: profileScale },
-          { scale: 1, duration: profileClipDuration, ease: "power3.out" },
-          0
-        )
-        .fromTo(
-          [label.current, name.current, parent.current, quote.current],
-          { yPercent: 120, opacity: 0 },
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.7,
-            ease: "power3.out",
-            stagger: 0.1,
-          },
-          0.25
-        );
+        })
+          .to(photo.current, { scale: 1, duration: profileClipDuration, ease: "power3.out" }, 0)
+          .to(
+            [label.current, name.current, parent.current, quote.current],
+            { yPercent: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.1 },
+            0.25
+          )
+          .to(ambient.current, { scaleY: 1, opacity: 1, duration: profileAmbientDuration, ease: "power3.out" }, 0.1);
+      };
+
+      const fadeOut = () => {
+        gsap.to(card.current, {
+          opacity: 0,
+          scale: 0.96,
+          duration: profileRevealDuration * 0.6,
+          ease: "power2.in",
+        });
+        gsap.to([label.current, name.current, parent.current, quote.current], {
+          opacity: 0,
+          duration: 0.4,
+          ease: "power2.in",
+        });
+      };
 
       gsap.fromTo(
         photo.current,
@@ -93,12 +106,7 @@ function ProfileCard({ data, side }) {
         {
           yPercent: profileParallax,
           ease: "none",
-          scrollTrigger: {
-            trigger: card.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
+          scrollTrigger: { trigger: card.current, start: "top bottom", end: "bottom top", scrub: true },
         }
       );
 
@@ -108,27 +116,28 @@ function ProfileCard({ data, side }) {
         {
           yPercent: -profileTextDrift,
           ease: "none",
-          scrollTrigger: {
-            trigger: card.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
+          scrollTrigger: { trigger: card.current, start: "top bottom", end: "bottom top", scrub: true },
         }
       );
 
-      const onEnter = () =>
-        gsap.to(photo.current, { scale: 1.06, duration: 0.6, ease: "power2.out" });
-      const onLeave = () =>
-        gsap.to(photo.current, { scale: 1, duration: 0.6, ease: "power2.out" });
+      const onEnter = () => gsap.to(photo.current, { scale: 1.06, duration: 0.6, ease: "power2.out" });
+      const onLeave = () => gsap.to(photo.current, { scale: 1, duration: 0.6, ease: "power2.out" });
       card.current.addEventListener("pointerenter", onEnter);
       card.current.addEventListener("pointerleave", onLeave);
+
+      return () => st.kill();
     }, card);
     return () => ctx.revert();
   }, [side]);
 
   return (
-    <article ref={card} className="flex flex-col items-center text-center">
+    <article ref={card} className="relative flex flex-col items-center text-center">
+      <span
+        ref={ambient}
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gold/30"
+        style={{ transform: "scaleY(0)" }}
+      />
       <div
         ref={clip}
         className="relative h-80 w-64 overflow-hidden rounded-sm md:h-96 md:w-72"
@@ -141,16 +150,10 @@ function ProfileCard({ data, side }) {
           className="h-[120%] w-full object-cover"
         />
       </div>
-      <p
-        ref={label}
-        className="mt-8 font-sans text-xs tracking-[0.4em] uppercase text-gold"
-      >
+      <p ref={label} className="mt-8 font-sans text-xs tracking-[0.4em] uppercase text-gold">
         {data.label}
       </p>
-      <h3
-        ref={name}
-        className="mt-3 font-serif text-4xl text-ink md:text-5xl"
-      >
+      <h3 ref={name} className="mt-3 font-serif text-4xl text-ink md:text-5xl">
         {data.name}
       </h3>
       <p ref={parent} className="mt-4 font-sans text-sm text-ink-soft">
@@ -168,16 +171,19 @@ export default function CoupleProfile() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        divider.current,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: profileDividerDuration,
-          ease: "power3.out",
-          scrollTrigger: { trigger: divider.current, start: "top 85%", once: true },
-        }
-      );
+      gsap.set(divider.current, { scaleX: 0, opacity: 0 });
+      ScrollTrigger.create({
+        trigger: divider.current,
+        start: "top 90%",
+        onEnter: () =>
+          gsap.to(divider.current, {
+            scaleX: 1,
+            opacity: 1,
+            duration: profileDividerDuration,
+            ease: "power3.out",
+          }),
+        onLeaveBack: () => gsap.to(divider.current, { opacity: 0, duration: 0.4 }),
+      });
     });
     return () => ctx.revert();
   }, []);
