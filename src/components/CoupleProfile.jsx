@@ -124,19 +124,20 @@ function ProfileCard({ data, side }) {
         }
       );
 
+      const node = card.current;
       const onEnter = () =>
         gsap.to(photo.current, { scale: 1.06, duration: 0.6, ease: "power2.out" });
       const onLeave = () =>
         gsap.to(photo.current, { scale: 1, duration: 0.6, ease: "power2.out" });
-      card.current.addEventListener("pointerenter", onEnter);
-      card.current.addEventListener("pointerleave", onLeave);
+      node.addEventListener("pointerenter", onEnter);
+      node.addEventListener("pointerleave", onLeave);
 
       const onLoad = () => ScrollTrigger.refresh();
       window.addEventListener("load", onLoad);
       return () => {
         window.removeEventListener("load", onLoad);
-        card.current.removeEventListener("pointerenter", onEnter);
-        card.current.removeEventListener("pointerleave", onLeave);
+        node.removeEventListener("pointerenter", onEnter);
+        node.removeEventListener("pointerleave", onLeave);
       };
     }, card);
     return () => ctx.revert();
