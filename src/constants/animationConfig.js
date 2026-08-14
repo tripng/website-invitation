@@ -1,9 +1,6 @@
 export const scrollEase = "power3.out";
 export const entranceDuration = 1.2;
-export const revealDuration = 1;
-export const parallaxDistance = 120;
 export const staggerEntrance = 0.15;
-export const staggerReveal = 0.12;
 export const loaderDuration = 2.2;
 export const curtainDuration = 1;
 export const marqueeDuration = 18;

@@ -5,12 +5,10 @@ import LoaderCurtain from "./components/LoaderCurtain";
 import StickyNavigation from "./components/StickyNavigation";
 import HeroSection from "./components/HeroSection";
 import MarqueeSection from "./components/MarqueeSection";
-import ScrollRevealSection from "./components/ScrollRevealSection";
 import OpeningBlessing from "./components/OpeningBlessing";
 import CoupleProfile from "./components/CoupleProfile";
 import EventDetails from "./components/EventDetails";
 import LoveStory from "./components/LoveStory";
-import ParallaxSection from "./components/ParallaxSection";
 import PreWeddingGallery from "./components/PreWeddingGallery";
 
 export default function App() {
@@ -32,8 +30,6 @@ export default function App() {
         <CoupleProfile />
         <EventDetails />
         <LoveStory />
-        <ScrollRevealSection />
-        <ParallaxSection />
         <PreWeddingGallery />
       </main>
     </>
