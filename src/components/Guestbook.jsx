@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { guestRevealDuration, guestStagger } from "../constants/animationConfig";
+import { guestRevealDuration } from "../constants/animationConfig";
 
 const SEED_MESSAGES = [
   { name: "Dewi Sartika", body: "Selamat menempuh hidup baru, semoga selalu berkah dan bahagia selamanya.", time: "2 jam lalu" },
