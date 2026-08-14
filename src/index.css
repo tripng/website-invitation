@@ -63,3 +63,17 @@ body {
     0 8px 24px rgba(43, 39, 35, 0.06),
     0 24px 64px rgba(43, 39, 35, 0.05);
 }
+
+.qris-scan {
+  animation: qris-scan-move 2.4s ease-in-out infinite;
+}
+
+@keyframes qris-scan-move {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(150px);
+  }
+}

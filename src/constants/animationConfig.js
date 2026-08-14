@@ -34,3 +34,6 @@ export const loveYearPop = 0.8;
 export const guidelineRevealDuration = 0.9;
 export const guidelineStagger = 0.12;
 export const swatchPop = 0.6;
+export const giftRevealDuration = 0.9;
+export const giftStagger = 0.14;
+export const giftScrubDistance = 600;
