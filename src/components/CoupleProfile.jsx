@@ -54,8 +54,8 @@ function ProfileCard({ data, side }) {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: card.current,
-          start: "top 80%",
-          end: "bottom 20%",
+          start: "top 85%",
+          end: "bottom top",
           toggleActions: "play reverse play reverse",
           invalidateOnRefresh: true,
         },
