@@ -43,62 +43,54 @@ function ProfileCard({ data, side }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const fromX = side === "left" ? -profileRevealDistance : profileRevealDistance;
+      const texts = [label.current, name.current, parent.current, quote.current];
 
       gsap.set(card.current, { xPercent: fromX, opacity: 0, scale: 0.92 });
       gsap.set(clip.current, { clipPath: "inset(0 100% 0 0)" });
       gsap.set(photo.current, { scale: profileScale });
-      gsap.set([label.current, name.current, parent.current, quote.current], {
-        yPercent: 120,
-        opacity: 0,
-      });
+      gsap.set(texts, { yPercent: 120, opacity: 0 });
       gsap.set(ambient.current, { scaleY: 0, opacity: 0 });
 
-      const st = ScrollTrigger.create({
-        trigger: card.current,
-        start: "top 85%",
-        end: "bottom 15%",
-        onEnter: () => playIn(),
-        onLeave: () => fadeOut(),
-        onEnterBack: () => playIn(),
-        onLeaveBack: () => fadeOut(),
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: card.current,
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play reverse play reverse",
+          invalidateOnRefresh: true,
+        },
       });
 
-      const playIn = () => {
-        gsap.to(card.current, {
-          xPercent: 0,
-          opacity: 1,
-          scale: 1,
-          duration: profileRevealDuration,
-          ease: "power3.out",
-        });
-        const tl = gsap.timeline();
-        tl.to(clip.current, {
+      tl.to(card.current, {
+        xPercent: 0,
+        opacity: 1,
+        scale: 1,
+        duration: profileRevealDuration,
+        ease: "power3.out",
+      })
+        .to(clip.current, {
           clipPath: "inset(0 0% 0 0)",
           duration: profileClipDuration,
           ease: "power4.out",
-        })
-          .to(photo.current, { scale: 1, duration: profileClipDuration, ease: "power3.out" }, 0)
-          .to(
-            [label.current, name.current, parent.current, quote.current],
-            { yPercent: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.1 },
-            0.25
-          )
-          .to(ambient.current, { scaleY: 1, opacity: 1, duration: profileAmbientDuration, ease: "power3.out" }, 0.1);
-      };
-
-      const fadeOut = () => {
-        gsap.to(card.current, {
-          opacity: 0,
-          scale: 0.96,
-          duration: profileRevealDuration * 0.6,
-          ease: "power2.in",
-        });
-        gsap.to([label.current, name.current, parent.current, quote.current], {
-          opacity: 0,
-          duration: 0.4,
-          ease: "power2.in",
-        });
-      };
+        }, 0)
+        .to(photo.current, {
+          scale: 1,
+          duration: profileClipDuration,
+          ease: "power3.out",
+        }, 0)
+        .to(texts, {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.1,
+        }, 0.25)
+        .to(ambient.current, {
+          scaleY: 1,
+          opacity: 1,
+          duration: profileAmbientDuration,
+          ease: "power3.out",
+        }, 0.1);
 
       gsap.fromTo(
         photo.current,
@@ -106,7 +98,13 @@ function ProfileCard({ data, side }) {
         {
           yPercent: profileParallax,
           ease: "none",
-          scrollTrigger: { trigger: card.current, start: "top bottom", end: "bottom top", scrub: true },
+          scrollTrigger: {
+            trigger: card.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
         }
       );
 
@@ -116,16 +114,30 @@ function ProfileCard({ data, side }) {
         {
           yPercent: -profileTextDrift,
           ease: "none",
-          scrollTrigger: { trigger: card.current, start: "top bottom", end: "bottom top", scrub: true },
+          scrollTrigger: {
+            trigger: card.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
         }
       );
 
-      const onEnter = () => gsap.to(photo.current, { scale: 1.06, duration: 0.6, ease: "power2.out" });
-      const onLeave = () => gsap.to(photo.current, { scale: 1, duration: 0.6, ease: "power2.out" });
+      const onEnter = () =>
+        gsap.to(photo.current, { scale: 1.06, duration: 0.6, ease: "power2.out" });
+      const onLeave = () =>
+        gsap.to(photo.current, { scale: 1, duration: 0.6, ease: "power2.out" });
       card.current.addEventListener("pointerenter", onEnter);
       card.current.addEventListener("pointerleave", onLeave);
 
-      return () => st.kill();
+      const onLoad = () => ScrollTrigger.refresh();
+      window.addEventListener("load", onLoad);
+      return () => {
+        window.removeEventListener("load", onLoad);
+        card.current.removeEventListener("pointerenter", onEnter);
+        card.current.removeEventListener("pointerleave", onLeave);
+      };
     }, card);
     return () => ctx.revert();
   }, [side]);
@@ -172,17 +184,19 @@ export default function CoupleProfile() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set(divider.current, { scaleX: 0, opacity: 0 });
-      ScrollTrigger.create({
-        trigger: divider.current,
-        start: "top 90%",
-        onEnter: () =>
-          gsap.to(divider.current, {
-            scaleX: 1,
-            opacity: 1,
-            duration: profileDividerDuration,
-            ease: "power3.out",
-          }),
-        onLeaveBack: () => gsap.to(divider.current, { opacity: 0, duration: 0.4 }),
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: divider.current,
+          start: "top 90%",
+          toggleActions: "play reverse play reverse",
+          invalidateOnRefresh: true,
+        },
+      });
+      tl.to(divider.current, {
+        scaleX: 1,
+        opacity: 1,
+        duration: profileDividerDuration,
+        ease: "power3.out",
       });
     });
     return () => ctx.revert();
