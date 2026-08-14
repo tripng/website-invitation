@@ -19,6 +19,5 @@ export const profileRevealDuration = 1;
 export const profileRevealDistance = 40;
 export const profileScale = 1.15;
 export const profileClipDuration = 1.1;
-export const profileTextDrift = 18;
 export const profileDividerDuration = 0.9;
 export const profileAmbientDuration = 1.4;

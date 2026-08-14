@@ -7,7 +7,6 @@ import {
   profileRevealDistance,
   profileScale,
   profileClipDuration,
-  profileTextDrift,
   profileDividerDuration,
   profileAmbientDuration,
 } from "../constants/animationConfig";
@@ -48,7 +47,7 @@ function ProfileCard({ data, side }) {
       gsap.set(card.current, { xPercent: fromX, opacity: 0, scale: 0.92 });
       gsap.set(clip.current, { clipPath: "inset(0 100% 0 0)" });
       gsap.set(photo.current, { scale: profileScale });
-      gsap.set(texts, { yPercent: 120, opacity: 0 });
+      gsap.set(texts, { y: 28, opacity: 0 });
       gsap.set(ambient.current, { scaleY: 0, opacity: 0 });
 
       const tl = gsap.timeline({
@@ -79,7 +78,7 @@ function ProfileCard({ data, side }) {
           ease: "power3.out",
         }, 0)
         .to(texts, {
-          yPercent: 0,
+          y: 0,
           opacity: 1,
           duration: 0.7,
           ease: "power3.out",
@@ -97,22 +96,6 @@ function ProfileCard({ data, side }) {
         { yPercent: -profileParallax },
         {
           yPercent: profileParallax,
-          ease: "none",
-          scrollTrigger: {
-            trigger: card.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        }
-      );
-
-      gsap.fromTo(
-        name.current,
-        { yPercent: profileTextDrift },
-        {
-          yPercent: -profileTextDrift,
           ease: "none",
           scrollTrigger: {
             trigger: card.current,
