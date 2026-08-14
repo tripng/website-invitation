@@ -8,6 +8,7 @@ import MarqueeSection from "./components/MarqueeSection";
 import ScrollRevealSection from "./components/ScrollRevealSection";
 import OpeningBlessing from "./components/OpeningBlessing";
 import CoupleProfile from "./components/CoupleProfile";
+import EventDetails from "./components/EventDetails";
 import ParallaxSection from "./components/ParallaxSection";
 import PreWeddingGallery from "./components/PreWeddingGallery";
 
@@ -28,6 +29,7 @@ export default function App() {
         <MarqueeSection />
         <OpeningBlessing />
         <CoupleProfile />
+        <EventDetails />
         <ScrollRevealSection />
         <ParallaxSection />
         <PreWeddingGallery />
