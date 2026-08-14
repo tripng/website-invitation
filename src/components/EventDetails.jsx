@@ -1,7 +1,14 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { eventRevealDuration, eventRevealDistance } from "../constants/animationConfig";
+import {
+  eventRevealDuration,
+  eventRevealDistance,
+  eventTilt,
+  eventParallax,
+  eventCornerDuration,
+  eventLabelStagger,
+} from "../constants/animationConfig";
 import Countdown from "./Countdown";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -64,16 +71,22 @@ function EventCard({ data, side }) {
   const time = useRef(null);
   const place = useRef(null);
   const buttons = useRef(null);
+  const c1 = useRef(null);
+  const c2 = useRef(null);
+  const c3 = useRef(null);
+  const c4 = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const fromX = side === "left" ? -eventRevealDistance : eventRevealDistance;
       const texts = [label.current, day.current, time.current, place.current];
+      const corners = [c1.current, c2.current, c3.current, c4.current];
 
       gsap.set(card.current, { xPercent: fromX, opacity: 0 });
       gsap.set(texts, { y: 28, opacity: 0 });
       gsap.set(buttons.current.children, { y: 20, opacity: 0 });
       gsap.set(icon.current, { strokeDasharray: 200, strokeDashoffset: 200 });
+      gsap.set(corners, { scaleX: 0, scaleY: 0 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -97,16 +110,57 @@ function EventCard({ data, side }) {
           buttons.current.children,
           { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.08 },
           0.5
+        )
+        .to(
+          corners,
+          { scaleX: 1, scaleY: 1, duration: eventCornerDuration, ease: "power3.out", stagger: 0.07 },
+          0.3
         );
 
+      gsap.fromTo(
+        card.current,
+        { yPercent: -eventParallax / 2 },
+        {
+          yPercent: eventParallax / 2,
+          ease: "none",
+          scrollTrigger: {
+            trigger: card.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
+
       const node = card.current;
-      const onEnter = () =>
-        gsap.to(node, { y: -8, duration: 0.4, ease: "power2.out" });
-      const onLeave = () => gsap.to(node, { y: 0, duration: 0.4, ease: "power2.out" });
+      const onMove = (e) => {
+        const r = node.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        gsap.to(node, {
+          rotateY: px * eventTilt,
+          rotateX: -py * eventTilt,
+          duration: 0.4,
+          ease: "power2.out",
+          transformPerspective: 800,
+        });
+      };
+      const onEnter = () => gsap.to(node, { y: -8, duration: 0.4, ease: "power2.out" });
+      const onLeave = () =>
+        gsap.to(node, {
+          y: 0,
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      node.addEventListener("pointermove", onMove);
       node.addEventListener("pointerenter", onEnter);
       node.addEventListener("pointerleave", onLeave);
 
       return () => {
+        node.removeEventListener("pointermove", onMove);
         node.removeEventListener("pointerenter", onEnter);
         node.removeEventListener("pointerleave", onLeave);
       };
@@ -120,11 +174,20 @@ function EventCard({ data, side }) {
     <article
       ref={card}
       className="group relative flex flex-col items-center rounded-sm border border-gold/30 bg-gradient-to-b from-ink/5 to-transparent px-8 py-12 text-center shadow-[0_20px_60px_-30px_rgba(43,39,35,0.4)] md:px-12"
+      style={{ transformStyle: "preserve-3d" }}
     >
-      <Corner className="left-3 top-3 border-l border-t" />
-      <Corner className="right-3 top-3 border-r border-t" />
-      <Corner className="bottom-3 left-3 border-b border-l" />
-      <Corner className="bottom-3 right-3 border-b border-r" />
+      <span ref={c1} className="absolute left-3 top-3 h-6 w-6">
+        <Corner className="left-3 top-3 border-l border-t" />
+      </span>
+      <span ref={c2} className="absolute right-3 top-3 h-6 w-6">
+        <Corner className="right-3 top-3 border-r border-t" />
+      </span>
+      <span ref={c3} className="absolute bottom-3 left-3 h-6 w-6">
+        <Corner className="bottom-3 left-3 border-b border-l" />
+      </span>
+      <span ref={c4} className="absolute bottom-3 right-3 h-6 w-6">
+        <Corner className="bottom-3 right-3 border-b border-r" />
+      </span>
       <svg
         ref={icon}
         viewBox="0 0 24 24"
@@ -181,21 +244,49 @@ function EventCard({ data, side }) {
 
 export default function EventDetails() {
   const divider = useRef(null);
+  const heading = useRef(null);
+  const glow = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set(divider.current, { scaleX: 0, opacity: 0 });
-      ScrollTrigger.create({
-        trigger: divider.current,
-        start: "top 90%",
-        onEnter: () =>
-          gsap.to(divider.current, {
-            scaleX: 1,
-            opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
-          }),
+      gsap.set([...heading.current.children], { yPercent: 110, opacity: 0 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: heading.current, start: "top 90%", once: true },
       });
+      tl.to(divider.current, {
+        scaleX: 1,
+        opacity: 1,
+        duration: 0.9,
+        ease: "power3.out",
+      }).to(
+        [...heading.current.children],
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: eventLabelStagger,
+        },
+        0.1
+      );
+
+      gsap.fromTo(
+        glow.current,
+        { yPercent: -eventParallax },
+        {
+          yPercent: eventParallax,
+          ease: "none",
+          scrollTrigger: {
+            trigger: glow.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
     });
     return () => ctx.revert();
   }, []);
@@ -203,12 +294,20 @@ export default function EventDetails() {
   return (
     <section className="relative overflow-hidden bg-cream px-6 py-28">
       <div
+        ref={glow}
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/10 blur-3xl"
       />
       <div className="relative mx-auto max-w-4xl">
-        <p className="mb-6 text-center font-sans text-xs tracking-[0.45em] uppercase text-gold">
-          Detail Acara
+        <p
+          ref={heading}
+          className="mb-6 flex justify-center gap-1.5 font-sans text-xs tracking-[0.45em] uppercase text-gold"
+        >
+          {[..."Detail Acara"].map((ch, i) => (
+            <span key={i} className="inline-block overflow-hidden">
+              <span className="inline-block">{ch === " " ? " " : ch}</span>
+            </span>
+          ))}
         </p>
         <Countdown />
         <div

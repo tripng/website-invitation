@@ -4,10 +4,27 @@ import { eventCountdownPulse } from "../constants/animationConfig";
 
 const TARGET = new Date("2026-09-12T08:00:00+08:00").getTime();
 
-function unit(value, label) {
+function Unit({ value, label }) {
+  const ref = useRef(null);
+  const prev = useRef(value);
+
+  useEffect(() => {
+    if (prev.current !== value) {
+      prev.current = value;
+      gsap.fromTo(
+        ref.current,
+        { scale: 1.18 },
+        { scale: 1, duration: 0.35, ease: "back.out(3)" }
+      );
+    }
+  }, [value]);
+
   return (
     <div className="flex flex-col items-center">
-      <span className="font-serif text-4xl text-ink md:text-5xl tabular-nums">
+      <span
+        ref={ref}
+        className="inline-block font-serif text-4xl text-ink tabular-nums md:text-5xl"
+      >
         {String(value).padStart(2, "0")}
       </span>
       <span className="mt-1 font-sans text-[0.6rem] tracking-[0.3em] uppercase text-gold">
@@ -60,13 +77,13 @@ export default function Countdown() {
       ref={root}
       className="mx-auto mb-20 flex items-center justify-center gap-6 md:gap-10"
     >
-      {unit(d, "Hari")}
+      <Unit value={d} label="Hari" />
       <span className="font-serif text-3xl text-gold md:text-4xl">:</span>
-      {unit(h, "Jam")}
+      <Unit value={h} label="Jam" />
       <span className="font-serif text-3xl text-gold md:text-4xl">:</span>
-      {unit(m, "Menit")}
+      <Unit value={m} label="Menit" />
       <span className="font-serif text-3xl text-gold md:text-4xl">:</span>
-      {unit(s, "Detik")}
+      <Unit value={s} label="Detik" />
     </div>
   );
 }

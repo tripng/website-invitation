@@ -24,3 +24,7 @@ export const profileAmbientDuration = 1.4;
 export const eventRevealDuration = 1;
 export const eventRevealDistance = 40;
 export const eventCountdownPulse = 1.2;
+export const eventTilt = 8;
+export const eventParallax = 30;
+export const eventCornerDuration = 0.5;
+export const eventLabelStagger = 0.04;
