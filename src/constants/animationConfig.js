@@ -39,3 +39,5 @@ export const giftStagger = 0.14;
 export const giftScrubDistance = 600;
 export const rsvpRevealDuration = 0.9;
 export const rsvpStagger = 0.13;
+export const guestRevealDuration = 0.8;
+export const guestStagger = 0.1;
