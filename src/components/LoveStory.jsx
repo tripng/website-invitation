@@ -38,7 +38,7 @@ const MILESTONES = [
   },
 ];
 
-function StoryNode({ data, index }) {
+function StoryNode({ data }) {
   const node = useRef(null);
   const year = useRef(null);
   const title = useRef(null);
@@ -160,7 +160,7 @@ export default function LoveStory() {
             style={{ width: loveLineWidth, transform: "scaleY(0)" }}
           />
           {MILESTONES.map((m, i) => (
-            <StoryNode key={i} data={m} index={i} />
+            <StoryNode key={i} data={m} />
           ))}
         </div>
       </div>
