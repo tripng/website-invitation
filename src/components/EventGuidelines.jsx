@@ -3,7 +3,6 @@ import { gsap } from "gsap";
 import {
   guidelineRevealDuration,
   swatchPop,
-  leafScrubDistance,
 } from "../constants/animationConfig";
 
 const SWATCHES = [
@@ -148,8 +147,8 @@ export default function EventGuidelines() {
         ease: "none",
         scrollTrigger: {
           trigger: section.current,
-          start: "top 70%",
-          end: () => `+=${leafScrubDistance}`,
+          start: "top 80%",
+          end: "bottom top",
           scrub: true,
         },
       });
