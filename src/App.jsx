@@ -9,6 +9,7 @@ import ScrollRevealSection from "./components/ScrollRevealSection";
 import OpeningBlessing from "./components/OpeningBlessing";
 import CoupleProfile from "./components/CoupleProfile";
 import EventDetails from "./components/EventDetails";
+import LoveStory from "./components/LoveStory";
 import ParallaxSection from "./components/ParallaxSection";
 import PreWeddingGallery from "./components/PreWeddingGallery";
 
@@ -30,6 +31,7 @@ export default function App() {
         <OpeningBlessing />
         <CoupleProfile />
         <EventDetails />
+        <LoveStory />
         <ScrollRevealSection />
         <ParallaxSection />
         <PreWeddingGallery />

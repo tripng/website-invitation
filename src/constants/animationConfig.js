@@ -30,3 +30,7 @@ export const eventCornerDuration = 0.5;
 export const eventLabelStagger = 0.04;
 export const eventProgressWidth = 2;
 export const eventTitleDuration = 0.9;
+export const loveLineWidth = 2;
+export const loveNodeDistance = 60;
+export const loveRevealDuration = 1;
+export const loveYearPop = 0.8;
