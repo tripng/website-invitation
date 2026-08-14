@@ -14,6 +14,7 @@ import EventGuidelines from "./components/EventGuidelines";
 import WeddingGift from "./components/WeddingGift";
 import Rsvp from "./components/Rsvp";
 import Guestbook from "./components/Guestbook";
+import Closing from "./components/Closing";
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -39,6 +40,7 @@ export default function App() {
         <WeddingGift />
         <Rsvp />
         <Guestbook />
+        <Closing />
       </main>
     </>
   );
