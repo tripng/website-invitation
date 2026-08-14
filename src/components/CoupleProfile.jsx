@@ -9,7 +9,6 @@ import {
   profileClipDuration,
   profileTextDrift,
   profileDividerDuration,
-  profileFadeDistance,
   profileAmbientDuration,
 } from "../constants/animationConfig";
 
@@ -47,6 +46,7 @@ function ProfileCard({ data, side }) {
 
       gsap.set(card.current, { xPercent: fromX, opacity: 0, scale: 0.92 });
       gsap.set(clip.current, { clipPath: "inset(0 100% 0 0)" });
+      gsap.set(photo.current, { scale: profileScale });
       gsap.set([label.current, name.current, parent.current, quote.current], {
         yPercent: 120,
         opacity: 0,
