@@ -12,6 +12,7 @@ import LoveStory from "./components/LoveStory";
 import PreWeddingGallery from "./components/PreWeddingGallery";
 import EventGuidelines from "./components/EventGuidelines";
 import WeddingGift from "./components/WeddingGift";
+import Rsvp from "./components/Rsvp";
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -35,6 +36,7 @@ export default function App() {
         <PreWeddingGallery />
         <EventGuidelines />
         <WeddingGift />
+        <Rsvp />
       </main>
     </>
   );

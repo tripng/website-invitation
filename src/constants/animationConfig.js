@@ -37,3 +37,5 @@ export const swatchPop = 0.6;
 export const giftRevealDuration = 0.9;
 export const giftStagger = 0.14;
 export const giftScrubDistance = 600;
+export const rsvpRevealDuration = 0.9;
+export const rsvpStagger = 0.13;
