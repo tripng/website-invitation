@@ -93,7 +93,7 @@ export default function EventDetails() {
   }, []);
 
   return (
-    <section ref={section} className="relative overflow-hidden bg-cream px-6 py-28">
+    <section ref={section} className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-cream px-6 py-32 md:py-28">
       <div ref={glow} aria-hidden="true" className="pointer-events-none absolute left-1/2 top-1/2 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/10 blur-3xl" />
       <div className="relative mx-auto max-w-4xl">
         <p ref={heading} className="mb-6 flex justify-center gap-1.5 font-sans text-xs tracking-[0.45em] uppercase text-gold">
@@ -112,7 +112,7 @@ export default function EventDetails() {
             className="absolute left-1/2 top-0 hidden h-full -translate-x-1/2 origin-top bg-gradient-to-b from-gold/70 to-gold/10 md:block"
             style={{ width: eventProgressWidth, transform: "scaleY(0)" }}
           />
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-14 md:grid-cols-2 md:gap-10">
             <EventCard data={AKAD} side="left" order={0} />
             <EventCard data={RESEPSI} side="right" order={1} />
           </div>
