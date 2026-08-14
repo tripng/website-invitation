@@ -48,10 +48,11 @@ export default function EventCard({ data, side, order }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const fromX = side === "left" ? -eventRevealDistance : eventRevealDistance;
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
       const texts = [label.current, day.current, time.current, place.current];
       const corners = [c1.current, c2.current, c3.current, c4.current];
 
-      gsap.set(card.current, { xPercent: fromX, opacity: 0 });
+      gsap.set(card.current, isMobile ? { yPercent: 40, opacity: 0 } : { xPercent: fromX, opacity: 0 });
       gsap.set(texts, { y: 28, opacity: 0 });
       gsap.set(buttons.current.children, { y: 20, opacity: 0 });
       gsap.set(icon.current, { strokeDasharray: 200, strokeDashoffset: 200 });
@@ -68,7 +69,9 @@ export default function EventCard({ data, side, order }) {
         },
       });
 
-      tl.to(card.current, { xPercent: 0, opacity: 1, duration: eventRevealDuration, ease: "power3.out" })
+      tl.to(card.current, isMobile
+        ? { yPercent: 0, opacity: 1, duration: eventRevealDuration, ease: "power3.out" }
+        : { xPercent: 0, opacity: 1, duration: eventRevealDuration, ease: "power3.out" })
         .to(icon.current, { strokeDashoffset: 0, duration: 1, ease: "power2.out" }, 0.1)
         .to(texts, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.1 }, 0.2)
         .to(buttons.current.children, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.08 }, 0.5)
