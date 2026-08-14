@@ -2,13 +2,10 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  eventRevealDistance,
   eventParallax,
-  eventCornerDuration,
   eventLabelStagger,
   eventProgressWidth,
   eventTitleDuration,
-  eventStaggerGap,
 } from "../constants/animationConfig";
 import Countdown from "./Countdown";
 import EventCard from "./EventCard";

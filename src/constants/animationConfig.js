@@ -30,4 +30,3 @@ export const eventCornerDuration = 0.5;
 export const eventLabelStagger = 0.04;
 export const eventProgressWidth = 2;
 export const eventTitleDuration = 0.9;
-export const eventStaggerGap = 0.15;
