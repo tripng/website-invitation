@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import {
   guidelineRevealDuration,
   swatchPop,
+  leafScrubDistance,
 } from "../constants/animationConfig";
 
 const SWATCHES = [
@@ -140,12 +141,18 @@ export default function EventGuidelines() {
         duration: 0.8,
         ease: "power3.out",
         stagger: 0.04,
-      })
-        .to(
-          leaf.current,
-          { strokeDashoffset: 0, duration: 1.4, ease: "power2.out" },
-          0.2
-        );
+      });
+
+      gsap.to(leaf.current, {
+        strokeDashoffset: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: section.current,
+          start: "top 70%",
+          end: () => `+=${leafScrubDistance}`,
+          scrub: true,
+        },
+      });
     }, section);
     return () => ctx.revert();
   }, []);
@@ -178,8 +185,8 @@ export default function EventGuidelines() {
           <svg
             ref={leaf}
             viewBox="0 0 200 80"
-            className="h-20 w-48 fill-none stroke-gold"
-            strokeWidth="1.4"
+            className="h-24 w-56 fill-none stroke-gold md:h-28 md:w-64"
+            strokeWidth="2.4"
             strokeLinecap="round"
           >
             <path d="M100 75 C100 50 70 45 55 30 C75 32 95 40 100 60 C105 40 125 32 145 30 C130 45 100 50 100 75 Z" />
