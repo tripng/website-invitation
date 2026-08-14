@@ -21,13 +21,13 @@ export default function PreWeddingGallery() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const horizontalTween = gsap.to(track.current, {
-        xPercent: -100 * (galleryPhotos.length - 1),
+        x: () => -(track.current.scrollWidth - window.innerWidth),
         ease: horizontalEase,
         scrollTrigger: {
           trigger: section.current,
           pin: true,
           scrub: 1,
-          end: () => `+=${track.current.scrollWidth}`,
+          end: () => `+=${track.current.scrollWidth - window.innerWidth}`,
           onUpdate: (self) =>
             gsap.set(progress.current, {
               scaleX: self.progress,
@@ -80,7 +80,6 @@ export default function PreWeddingGallery() {
       <div
         ref={track}
         className="flex items-center will-change-transform"
-        style={{ width: `${galleryPhotos.length * 90}vw` }}
       >
         {galleryPhotos.map((photo, index) => (
           <GalleryPanel
