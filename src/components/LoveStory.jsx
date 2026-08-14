@@ -47,8 +47,9 @@ function StoryNode({ data }) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
       const fromX = data.side === "left" ? -loveNodeDistance : loveNodeDistance;
-      gsap.set(node.current, { xPercent: fromX, opacity: 0 });
+      gsap.set(node.current, isMobile ? { yPercent: 40, opacity: 0 } : { xPercent: fromX, opacity: 0 });
       gsap.set([year.current, title.current, text.current], { y: 24, opacity: 0 });
       gsap.set(dot.current, { scale: 0 });
 
@@ -62,7 +63,9 @@ function StoryNode({ data }) {
         },
       });
 
-      tl.to(node.current, { xPercent: 0, opacity: 1, duration: loveRevealDuration, ease: "power3.out" })
+      tl.to(node.current, isMobile
+        ? { yPercent: 0, opacity: 1, duration: loveRevealDuration, ease: "power3.out" }
+        : { xPercent: 0, opacity: 1, duration: loveRevealDuration, ease: "power3.out" })
         .to(dot.current, { scale: 1, duration: 0.5, ease: "back.out(2)" }, 0)
         .to(year.current, { y: 0, opacity: 1, scale: 1, duration: loveYearPop, ease: "power3.out" }, 0.15)
         .to([title.current, text.current], { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", stagger: 0.1 }, 0.3);

@@ -26,12 +26,12 @@ export default function StickyNavigation() {
   return (
     <nav
       ref={nav}
-      className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 md:px-12 py-5 mix-blend-difference"
+      className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-5 text-ink mix-blend-difference md:px-12 md:mix-blend-difference"
     >
-      <span className="font-serif text-cream text-lg tracking-wide">
+      <span className="font-serif text-lg tracking-wide text-ink md:text-cream">
         A&amp;J
       </span>
-      <span className="font-sans text-cream text-xs tracking-[0.3em] uppercase">
+      <span className="font-sans text-xs tracking-[0.3em] uppercase text-ink md:text-cream">
         12 . 09 . 26
       </span>
     </nav>
