@@ -133,7 +133,7 @@ export default function Closing() {
         ref={credit}
         className="font-sans text-[0.7rem] uppercase tracking-[0.3em] text-cream/40"
       >
-        Crafted with love · Wedding Invitation
+        Crafted with love · TriPng
       </p>
     </section>
   );

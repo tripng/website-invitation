@@ -37,6 +37,14 @@ export default function PreWeddingGallery() {
 
       panels.current.forEach((panel) => {
         const photo = panel.querySelector(".gallery-photo");
+        if (photo && !photo.complete) {
+          photo.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
+        }
+      });
+      ScrollTrigger.refresh();
+
+      panels.current.forEach((panel) => {
+        const photo = panel.querySelector(".gallery-photo");
         const caption = panel.querySelector(".gallery-caption");
 
         gsap.fromTo(
