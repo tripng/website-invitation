@@ -27,7 +27,7 @@ export default function HeroBackground() {
         speed: 1.1,
         zoom: 0.9,
       });
-    } catch (e) {
+    } catch {
       effect.current = null;
     }
 
