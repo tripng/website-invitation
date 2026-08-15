@@ -8,6 +8,7 @@ import {
   metaRevealDuration,
   accentRevealDuration,
 } from "../constants/animationConfig";
+import HeroBackground from "./HeroBackground";
 
 export default function HeroSection({ start }) {
   const root = useRef(null);
@@ -121,6 +122,7 @@ export default function HeroSection({ start }) {
       onPointerMove={handlePointer}
       className="relative min-h-screen overflow-hidden bg-cream"
     >
+      <HeroBackground />
       <div
         ref={background}
         className="absolute inset-0 -z-20 bg-cover bg-center opacity-25"
