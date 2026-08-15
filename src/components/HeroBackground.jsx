@@ -19,12 +19,12 @@ export default function HeroBackground() {
         gyroControls: false,
         minHeight: 200,
         minWidth: 200,
-        highlightColor: 0xc9a24b,
-        midtoneColor: 0xe8dcc3,
-        lowlightColor: 0xf3ead7,
+        highlightColor: 0xd4af37,
+        midtoneColor: 0xc9a24b,
+        lowlightColor: 0xb8935a,
         baseColor: 0xf3ead7,
-        blurFactor: 0.7,
-        speed: 1.1,
+        blurFactor: 0.85,
+        speed: 1.0,
         zoom: 0.9,
       });
     } catch {
