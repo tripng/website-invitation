@@ -19,20 +19,28 @@ export default function PreWeddingGallery() {
   const panels = useRef([]);
 
   useEffect(() => {
-    const mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      const distance = () => track.current.scrollWidth - window.innerWidth;
 
-    mm.add("(min-width: 768px)", () => {
       const horizontalTween = gsap.to(track.current, {
-        x: () => -(track.current.scrollWidth - window.innerWidth),
+        x: () => -distance(),
         ease: horizontalEase,
         scrollTrigger: {
           trigger: section.current,
           pin: true,
           scrub: 1,
-          end: () => `+=${track.current.scrollWidth - window.innerWidth}`,
+          end: () => `+=${distance()}`,
+          invalidateOnRefresh: true,
           onUpdate: (self) =>
             gsap.set(progress.current, { scaleX: self.progress }),
         },
+      });
+
+      panels.current.forEach((panel) => {
+        const photo = panel.querySelector(".gallery-photo");
+        if (photo && !photo.complete) {
+          photo.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
+        }
       });
 
       panels.current.forEach((panel) => {
@@ -66,22 +74,16 @@ export default function PreWeddingGallery() {
           },
         });
       });
-
-      return () => horizontalTween.scrollTrigger.kill();
-    });
-
-    return () => mm.revert();
+    }, section);
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
       ref={section}
-      className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-ink py-16 md:h-screen md:py-0"
+      className="relative h-screen overflow-hidden bg-ink flex items-center"
     >
-      <div
-        ref={track}
-        className="flex items-center gap-4 overflow-x-auto px-4 will-change-transform snap-x snap-mandatory md:gap-0 md:overflow-visible md:px-0 md:snap-none"
-      >
+      <div ref={track} className="flex items-center will-change-transform">
         {galleryPhotos.map((photo, index) => (
           <GalleryPanel
             key={photo.src}
@@ -91,13 +93,11 @@ export default function PreWeddingGallery() {
           />
         ))}
       </div>
-      <div className="absolute bottom-8 left-1/2 hidden w-1/2 -translate-x-1/2 md:block">
-        <span className="block h-px w-full bg-cream/20">
-          <span
-            ref={progress}
-            className="block h-full w-full origin-left bg-gold scale-x-0"
-          />
-        </span>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-1/2 h-px bg-cream/20">
+        <span
+          ref={progress}
+          className="block h-full w-full origin-left bg-gold scale-x-0"
+        />
       </div>
     </section>
   );
