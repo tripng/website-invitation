@@ -68,6 +68,14 @@ body {
   animation: qris-scan-move 2.4s ease-in-out infinite;
 }
 
+#hero canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none;
+}
+
 @keyframes qris-scan-move {
   0%,
   100% {

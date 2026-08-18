@@ -8,7 +8,8 @@ export default function HeroBackground() {
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce || !el.current) return;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (reduce || isMobile || !el.current) return;
 
     try {
       effect.current = FOG({
@@ -23,8 +24,8 @@ export default function HeroBackground() {
         midtoneColor: 0xc9a24b,
         lowlightColor: 0xb8935a,
         baseColor: 0xf3ead7,
-        blurFactor: 0.85,
-        speed: 1.0,
+        blurFactor: 0.6,
+        speed: 0.7,
         zoom: 0.9,
       });
     } catch {
