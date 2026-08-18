@@ -26,7 +26,6 @@ export const galleryPhotos = [
   },
 ];
 
-export const panelWidth = 80;
 export const horizontalEase = "none";
 export const captionRevealDuration = 0.8;
 export const captionRevealEase = "power2.out";
