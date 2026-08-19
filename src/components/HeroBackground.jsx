@@ -54,7 +54,7 @@ export default function HeroBackground() {
     <div
       ref={el}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-30"
+      className="fog-bg pointer-events-none absolute inset-0 -z-30"
     />
   );
 }

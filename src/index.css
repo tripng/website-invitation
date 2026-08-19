@@ -76,6 +76,25 @@ body {
   pointer-events: none;
 }
 
+.fog-bg {
+  background:
+    radial-gradient(40% 55% at 25% 30%, rgba(201, 162, 75, 0.35), transparent 60%),
+    radial-gradient(45% 50% at 75% 40%, rgba(184, 147, 90, 0.28), transparent 60%),
+    radial-gradient(50% 60% at 50% 80%, rgba(212, 175, 55, 0.22), transparent 65%),
+    #f3ead7;
+  background-size: 200% 200%, 220% 220%, 240% 240%, 100% 100%;
+  animation: fog-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes fog-drift {
+  0% {
+    background-position: 0% 0%, 100% 0%, 50% 100%, 0 0;
+  }
+  100% {
+    background-position: 100% 50%, 0% 50%, 50% 0%, 0 0;
+  }
+}
+
 @keyframes qris-scan-move {
   0%,
   100% {
