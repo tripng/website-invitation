@@ -15,7 +15,6 @@ export default function HeroBackground() {
         id: "hero-particles",
         options: {
           fullScreen: { enable: false },
-          background: { color: { value: "#f3ead7" } },
           fpsLimit: 60,
           particles: {
             number: { value: 60, density: { enable: true, area: 900 } },
