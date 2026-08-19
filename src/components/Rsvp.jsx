@@ -29,8 +29,12 @@ export default function Rsvp() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set([...heading.current.children], { yPercent: 120 });
-      gsap.set(scrollSvg.current, { strokeDasharray: 520, strokeDashoffset: 520 });
       gsap.set(fields.current, { y: 40, opacity: 0 });
+      const scrollPaths = scrollSvg.current.querySelectorAll("path");
+      scrollPaths.forEach((p) => {
+        const len = p.getTotalLength();
+        gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -47,13 +51,12 @@ export default function Rsvp() {
         stagger: 0.04,
       });
 
-      gsap.to(scrollSvg.current, {
+      gsap.to(scrollPaths, {
         strokeDashoffset: 0,
         ease: "none",
         scrollTrigger: {
           trigger: section.current,
           start: "top 65%",
-          end: "bottom top",
           scrub: true,
         },
       });
@@ -107,16 +110,20 @@ export default function Rsvp() {
         <div className="mb-12 flex justify-center">
           <svg
             ref={scrollSvg}
-            viewBox="0 0 220 90"
-            className="h-20 w-52 fill-none stroke-gold"
+            viewBox="0 0 240 100"
+            className="h-20 w-56 fill-none stroke-gold"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <path d="M30 20 Q110 5 190 20 Q200 50 190 78 Q110 93 30 78 Q20 50 30 20 Z" />
-            <path d="M110 12 L110 86" />
-            <path d="M60 35 Q110 26 160 35" />
-            <path d="M60 55 Q110 46 160 55" />
+            <path d="M36 26 C18 26 18 74 36 74" />
+            <path d="M36 35 C26 35 26 65 36 65" />
+            <path d="M204 26 C222 26 222 74 204 74" />
+            <path d="M204 35 C214 35 214 65 204 65" />
+            <path d="M36 28 L204 28 L204 72 L36 72 Z" />
+            <path d="M120 18 L120 82" />
+            <path d="M58 46 L182 46" />
+            <path d="M58 58 L162 58" />
           </svg>
         </div>
 

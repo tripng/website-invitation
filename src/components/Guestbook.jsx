@@ -63,8 +63,12 @@ export default function Guestbook() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set([...heading.current.children], { yPercent: 120 });
-      gsap.set(pen.current, { strokeDasharray: 480, strokeDashoffset: 480 });
       gsap.set(form.current, { y: 40, opacity: 0 });
+      const penPaths = pen.current.querySelectorAll("path");
+      penPaths.forEach((p) => {
+        const len = p.getTotalLength();
+        gsap.set(p, { strokeDasharray: len, strokeDashoffset: len });
+      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -81,7 +85,7 @@ export default function Guestbook() {
         stagger: 0.04,
       });
 
-      gsap.to(pen.current, {
+      gsap.to(penPaths, {
         strokeDashoffset: 0,
         ease: "none",
         scrollTrigger: {
@@ -145,16 +149,17 @@ export default function Guestbook() {
         <div className="mb-12 flex justify-center">
           <svg
             ref={pen}
-            viewBox="0 0 200 90"
+            viewBox="0 0 200 100"
             className="h-20 w-44 fill-none stroke-gold"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           >
-            <path d="M40 75 L150 20" />
-            <path d="M150 20 L172 14 L166 36 Z" />
-            <path d="M40 75 L30 82 L52 72 Z" />
-            <path d="M70 62 Q100 50 130 40" />
+            <path d="M52 82 L148 26" />
+            <path d="M148 26 L174 14 L158 40 Z" />
+            <path d="M52 82 L38 88 L58 74 Z" />
+            <path d="M96 54 L120 40" />
+            <path d="M70 70 L82 62" />
           </svg>
         </div>
 
