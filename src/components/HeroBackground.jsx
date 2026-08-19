@@ -1,6 +1,4 @@
 import { useEffect, useRef } from "react";
-import * as THREE from "three";
-import FOG from "vanta/dist/vanta.fog.min.js";
 
 export default function HeroBackground() {
   const el = useRef(null);
@@ -10,28 +8,46 @@ export default function HeroBackground() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || !el.current) return;
 
-    try {
-      effect.current = FOG({
-        el: el.current,
-        THREE,
-        mouseControls: false,
-        touchControls: false,
-        gyroControls: false,
-        minHeight: 200,
-        minWidth: 200,
-        highlightColor: 0xd4af37,
-        midtoneColor: 0xc9a24b,
-        lowlightColor: 0xb8935a,
-        baseColor: 0xf3ead7,
-        blurFactor: 0.5,
-        speed: 0.6,
-        zoom: 0.9,
-      });
-    } catch {
-      effect.current = null;
-    }
+    let tries = 0;
+    let raf;
 
-    return () => effect.current && effect.current.destroy();
+    const init = () => {
+      const THREE = window.THREE;
+      const FOG = window.VANTA && window.VANTA.FOG;
+      if (!THREE || !FOG) {
+        if (tries++ < 60) {
+          raf = requestAnimationFrame(init);
+        }
+        return;
+      }
+      try {
+        effect.current = FOG({
+          el: el.current,
+          THREE,
+          mouseControls: false,
+          touchControls: false,
+          gyroControls: false,
+          minHeight: 200,
+          minWidth: 200,
+          highlightColor: 0xd4af37,
+          midtoneColor: 0xc9a24b,
+          lowlightColor: 0xb8935a,
+          baseColor: 0xf3ead7,
+          blurFactor: 0.55,
+          speed: 0.6,
+          zoom: 0.9,
+        });
+      } catch {
+        effect.current = null;
+      }
+    };
+
+    init();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      if (effect.current && effect.current.destroy) effect.current.destroy();
+    };
   }, []);
 
   return (
