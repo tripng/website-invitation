@@ -128,7 +128,7 @@ export default function HeroSection({ start }) {
         className="absolute inset-0 -z-20 bg-cover bg-center opacity-25"
         style={{
           backgroundImage:
-            "url(https://picsum.photos/seed/hero-wedding/1600/1200)",
+            "url(https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=80)",
         }}
       />
       <div className="hero-vignette -z-10" />

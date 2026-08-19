@@ -1,60 +1,55 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
+import { tsParticles } from "@tsparticles/engine";
+import { loadSlim } from "@tsparticles/slim";
 
 export default function HeroBackground() {
-  const el = useRef(null);
-  const effect = useRef(null);
-
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce || !el.current) return;
-
-    let tries = 0;
-    let raf;
-
-    const init = () => {
-      const THREE = window.THREE;
-      const FOG = window.VANTA && window.VANTA.FOG;
-      if (!THREE || !FOG) {
-        if (tries++ < 60) {
-          raf = requestAnimationFrame(init);
-        }
-        return;
-      }
-      try {
-        effect.current = FOG({
-          el: el.current,
-          THREE,
-          mouseControls: false,
-          touchControls: false,
-          gyroControls: false,
-          minHeight: 200,
-          minWidth: 200,
-          highlightColor: 0xd4af37,
-          midtoneColor: 0xc9a24b,
-          lowlightColor: 0xb8935a,
-          baseColor: 0xf3ead7,
-          blurFactor: 0.55,
-          speed: 0.6,
-          zoom: 0.9,
-        });
-      } catch {
-        effect.current = null;
-      }
-    };
-
-    init();
-
+    if (reduce) return;
+    let container;
+    let cancelled = false;
+    (async () => {
+      await loadSlim(tsParticles);
+      if (cancelled) return;
+      container = await tsParticles.load({
+        id: "hero-particles",
+        options: {
+          fullScreen: { enable: false },
+          background: { color: { value: "#f3ead7" } },
+          fpsLimit: 60,
+          particles: {
+            number: { value: 45, density: { enable: true, area: 900 } },
+            color: { value: ["#c9a24b", "#d4af37", "#b8935a"] },
+            shape: { type: "circle" },
+            opacity: {
+              value: { min: 0.2, max: 0.7 },
+              animation: { enable: true, speed: 0.6, sync: false },
+            },
+            size: { value: { min: 1, max: 4 } },
+            move: {
+              enable: true,
+              speed: 0.5,
+              direction: "none",
+              random: true,
+              outModes: { default: "out" },
+            },
+            links: { enable: false },
+          },
+          detectRetina: true,
+        },
+      });
+    })();
     return () => {
-      cancelAnimationFrame(raf);
-      if (effect.current && effect.current.destroy) effect.current.destroy();
+      cancelled = true;
+      if (container) container.destroy();
     };
   }, []);
 
   return (
     <div
-      ref={el}
+      id="hero-particles"
       aria-hidden="true"
-      className="fog-bg pointer-events-none absolute inset-0 -z-30"
+      className="pointer-events-none absolute inset-0 -z-30"
     />
   );
 }
