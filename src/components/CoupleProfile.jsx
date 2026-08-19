@@ -8,7 +8,6 @@ import {
   profileScale,
   profileClipDuration,
   profileDividerDuration,
-  profileAmbientDuration,
 } from "../constants/animationConfig";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,7 +36,6 @@ function ProfileCard({ data, side }) {
   const name = useRef(null);
   const parent = useRef(null);
   const quote = useRef(null);
-  const ambient = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,7 +46,6 @@ function ProfileCard({ data, side }) {
       gsap.set(clip.current, { clipPath: "inset(0 100% 0 0)" });
       gsap.set(photo.current, { scale: profileScale });
       gsap.set(texts, { y: 28, opacity: 0 });
-      gsap.set(ambient.current, { scaleY: 0, opacity: 0 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -83,13 +80,7 @@ function ProfileCard({ data, side }) {
           duration: 0.7,
           ease: "power3.out",
           stagger: 0.1,
-        }, 0.25)
-        .to(ambient.current, {
-          scaleY: 1,
-          opacity: 1,
-          duration: profileAmbientDuration,
-          ease: "power3.out",
-        }, 0.1);
+        }, 0.25);
 
       gsap.fromTo(
         photo.current,
@@ -128,12 +119,6 @@ function ProfileCard({ data, side }) {
 
   return (
     <article ref={card} className="relative flex flex-col items-center text-center">
-      <span
-        ref={ambient}
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gold/30"
-        style={{ transform: "scaleY(0)" }}
-      />
       <div
         ref={clip}
         className="relative h-80 w-64 overflow-hidden rounded-sm md:h-96 md:w-72"
