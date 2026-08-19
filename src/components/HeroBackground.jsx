@@ -50,7 +50,7 @@ export default function HeroBackground() {
     <div
       id="hero-particles"
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-30"
+      className="pointer-events-none absolute inset-0 z-0"
     />
   );
 }
