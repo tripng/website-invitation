@@ -120,7 +120,7 @@ export default function HeroSection({ start }) {
       id="hero"
       ref={root}
       onPointerMove={handlePointer}
-      className="relative min-h-screen overflow-hidden bg-cream"
+      className="relative min-h-screen overflow-hidden"
     >
       <HeroBackground />
       <div
