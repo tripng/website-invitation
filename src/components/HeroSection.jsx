@@ -125,7 +125,7 @@ export default function HeroSection({ start }) {
       <HeroBackground />
       <div
         ref={background}
-        className="absolute inset-0 -z-20 bg-cover bg-center opacity-25"
+        className="absolute inset-0 -z-20 scale-110 bg-cover bg-center opacity-25"
         style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=80)",
